@@ -1,7 +1,11 @@
 import createBrowserHistory from 'history/createBrowserHistory';
 import React from 'react';
 
-import {render} from 'hops-react';
+import {
+  ReactContext as HopsReactContext,
+  combineContexts,
+  render,
+} from 'hops-react';
 
 import {App} from './app';
 import {Context} from './context';
@@ -13,4 +17,6 @@ class DomContext extends Context {
   }
 }
 
-export default render(<App />, new DomContext({reducers}));
+const createContext = combineContexts(HopsReactContext, DomContext);
+
+export default render(<App />, createContext({reducers}));

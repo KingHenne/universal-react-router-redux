@@ -6,11 +6,15 @@ import {
   routerReducer,
   routerMiddleware,
 } from 'react-router-redux';
-import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 
-import {Context as HopsReduxContext} from 'hops-redux';
+import {ReduxContext as HopsReduxContext} from 'hops-redux';
 
 export class Context extends HopsReduxContext {
+  constructor(options) {
+    super(options);
+    this.registerReducer('router', routerReducer);
+  }
+
   createHistory() {
     return createMemoryHistory();
   }
@@ -19,14 +23,8 @@ export class Context extends HopsReduxContext {
     return this.history || (this.history = this.createHistory());
   }
 
-  createStore() {
-    return createStore(
-      combineReducers({...this.reducers, router: routerReducer}),
-      global['INITIAL_STATE'],
-      (global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)(
-        applyMiddleware(routerMiddleware(this.getHistory())),
-      ),
-    );
+  getMiddlewares() {
+    return [routerMiddleware(this.getHistory())];
   }
 
   enhanceElement(reactElement) {
