@@ -1,3 +1,3 @@
 // @flow
 
-export { default as Counter } from './counterContainer';
+export {default as Counter} from './counterContainer';

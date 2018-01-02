@@ -1,7 +1,7 @@
 // @flow
 
-import { INCREMENT, DECREMENT } from './constants';
-import type { Action } from './actions';
+import {INCREMENT, DECREMENT} from './constants';
+import type {Action} from './actions';
 
 export type State = number;
 

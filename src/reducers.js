@@ -1,13 +1,13 @@
 // @flow
 
-import counter, { type State as CounterState } from './counter/reducer';
+import counter, {type State as CounterState} from './counter/reducer';
 
 const reducer = {
-  counter
+  counter,
 };
 
 export type ApplicationState = {
-  counter: CounterState;
+  counter: CounterState,
 };
 
 export default reducer;

@@ -1,7 +1,7 @@
 // @flow
 
-import { INCREMENT, DECREMENT } from '../constants';
-import { increment, decrement } from '../actions';
+import {INCREMENT, DECREMENT} from '../constants';
+import {increment, decrement} from '../actions';
 
 describe('Counter actions', () => {
   describe('increment', () => {

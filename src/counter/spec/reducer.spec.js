@@ -1,7 +1,7 @@
 // @flow
 
 import counter from '../reducer';
-import { increment, decrement } from '../actions';
+import {increment, decrement} from '../actions';
 
 describe('Counter reducer', () => {
   it('initializes with 0', () => {
@@ -23,6 +23,6 @@ describe('Counter reducer', () => {
 
   it('returns current state on unknown action', () => {
     // $FlowExpectError - action must be a union of increment|decrement
-    expect(counter(5, { type: 'FOO' })).toBe(5);
+    expect(counter(5, {type: 'FOO'})).toBe(5);
   });
 });

@@ -1,20 +1,18 @@
 // @flow
 
-import { INCREMENT, DECREMENT } from './constants';
+import {INCREMENT, DECREMENT} from './constants';
 
 type IncrementAction = {
-  type: typeof INCREMENT;
-  payload: number;
+  type: typeof INCREMENT,
+  payload: number,
 };
 
 type DecrementAction = {
-  type: typeof DECREMENT;
-  payload: number;
+  type: typeof DECREMENT,
+  payload: number,
 };
 
-export type Action =
-  | IncrementAction
-  | DecrementAction;
+export type Action = IncrementAction | DecrementAction;
 
 export function increment(amount: number = 1): IncrementAction {
   return {
