@@ -1,14 +1,19 @@
+import mixinable from 'mixinable';
 import React from 'react';
 
-import {
-  ReactContext as HopsReactContext,
-  combineContexts,
-  render,
-} from 'hops-react';
+import {ReactContext as HopsReactContext, render} from 'hops-react';
 
 import {App} from './app';
 import {Context} from './context';
 import reducers from './reducers';
+
+const combineContexts = mixinable({
+  bootstrap: mixinable.async.parallel,
+  // for enhanceElement use 'override' instead of the default 'compose'
+  enhanceElement: mixinable.async.override,
+  getTemplateData: mixinable.async.pipe,
+  renderTemplate: mixinable.override,
+});
 
 const createContext = combineContexts(HopsReactContext, Context);
 

@@ -1,11 +1,8 @@
 import createBrowserHistory from 'history/createBrowserHistory';
+import mixinable from 'mixinable';
 import React from 'react';
 
-import {
-  ReactContext as HopsReactContext,
-  combineContexts,
-  render,
-} from 'hops-react';
+import {ReactContext as HopsReactContext, render} from 'hops-react';
 
 import {App} from './app';
 import {Context} from './context';
@@ -16,6 +13,13 @@ class DomContext extends Context {
     return createBrowserHistory();
   }
 }
+
+const combineContexts = mixinable({
+  bootstrap: mixinable.async.parallel,
+  // for enhanceElement use 'override' instead of the default 'compose'
+  enhanceElement: mixinable.async.override,
+  getMountpoint: mixinable.override,
+});
 
 const createContext = combineContexts(HopsReactContext, DomContext);
 
