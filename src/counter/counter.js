@@ -1,14 +1,6 @@
-// @flow
-
 import React from 'react';
 
-export type Props = {
-  count: number,
-  increment: (amount?: number) => void,
-  decrement: (amount?: number) => void,
-};
-
-export default function Counter({count, increment, decrement}: Props) {
+export default function Counter({count, increment, decrement}) {
   return (
     <div>
       <span>Clicked: {count} times</span>

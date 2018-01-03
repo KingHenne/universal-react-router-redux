@@ -14,11 +14,9 @@
     }
   },
   "scripts": {
-    "postinstall": "flow-typed install --overwrite",
     "start": "hops start",
     "build": "hops build",
     "test": "jest",
-    "flow": "flow",
     "format": "prettier --write 'src/**/*.js'"
   },
   "dependencies": {
@@ -39,8 +37,6 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "flow-bin": "^0.57.2",
-    "flow-typed": "^2.2.0",
     "hops-build": "7.2.0",
     "jest": "^21.2.1",
     "jest-preset-hops": "7.2.0",

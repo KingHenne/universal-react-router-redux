@@ -1,7 +1,5 @@
-// @flow
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
-import type {Node} from 'react';
 import {Provider} from 'react-redux';
 import {
   ConnectedRouter,
@@ -31,7 +29,7 @@ export class Context extends HopsReduxContext {
     );
   }
 
-  enhanceElement(reactElement: Node) {
+  enhanceElement(reactElement) {
     return (
       <Provider store={this.getStore()}>
         <ConnectedRouter history={this.getHistory()}>

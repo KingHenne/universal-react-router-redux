@@ -1,4 +1,3 @@
-// @flow
 import createBrowserHistory from 'history/createBrowserHistory';
 import React from 'react';
 
