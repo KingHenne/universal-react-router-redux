@@ -7,9 +7,16 @@ import {
   routerMiddleware,
 } from 'react-router-redux';
 
+import {ReactContext as HopsReactContext} from 'hops-react';
 import {ReduxContext as HopsReduxContext} from 'hops-redux';
 
-export class Context extends HopsReduxContext {
+export class ReactContext extends HopsReactContext {
+  enhanceElement(element) {
+    return element;
+  }
+}
+
+export class ReduxContext extends HopsReduxContext {
   constructor(options) {
     super(options);
     this.registerReducer('router', routerReducer);
@@ -27,12 +34,10 @@ export class Context extends HopsReduxContext {
     return [routerMiddleware(this.getHistory())];
   }
 
-  enhanceElement(reactElement) {
+  enhanceElement(element) {
     return (
       <Provider store={this.getStore()}>
-        <ConnectedRouter history={this.getHistory()}>
-          {reactElement}
-        </ConnectedRouter>
+        <ConnectedRouter history={this.getHistory()}>{element}</ConnectedRouter>
       </Provider>
     );
   }

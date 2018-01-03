@@ -26,7 +26,6 @@
     "hops-local-cli": "9.3.0",
     "hops-react": "9.3.0",
     "hops-redux": "9.3.0",
-    "mixinable": "^1.2.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-helmet": "^5.2.0",
