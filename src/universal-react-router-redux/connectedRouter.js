@@ -9,7 +9,7 @@ export class ConnectedRouter extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     history: PropTypes.object.isRequired,
-    routes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    routes: PropTypes.arrayOf(PropTypes.object),
     static: PropTypes.bool,
   };
 
@@ -40,10 +40,18 @@ export class ConnectedRouter extends React.Component {
   }
 
   handleLocationChange(location) {
+    const match = this.findMatch(location);
+    this.context.store.dispatch(locationChange(location, match));
+  }
+
+  findMatch(location) {
+    if (!this.props.routes) {
+      return undefined;
+    }
+
     const matchedRoutes = matchRoutes(this.props.routes, location.pathname);
     const matchedRoute = matchedRoutes.find(route => route.match.isExact);
-    const match = matchedRoute && matchedRoute.match;
 
-    this.context.store.dispatch(locationChange(location, match));
+    return matchedRoute && matchedRoute.match;
   }
 }

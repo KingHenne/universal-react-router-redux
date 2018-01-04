@@ -8,7 +8,7 @@ export class StaticRouter extends React.Component {
     context: PropTypes.object.isRequired,
     children: PropTypes.node,
     history: PropTypes.object.isRequired,
-    routes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    routes: PropTypes.arrayOf(PropTypes.object),
   };
 
   static defaultProps = {
