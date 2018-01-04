@@ -7,13 +7,13 @@
 body {
   text-align: center;
   color: var(--primary-color);
+  font-family: var(--font-family-sans);
 }
 
 .headline {
   margin-top: 2em;
   display: inline-block;
 
-  font-family: var(--font-family-sans);
   font-size: var(--font-size);
 
   @nest &::after {
