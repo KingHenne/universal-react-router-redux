@@ -1,11 +1,8 @@
 import React from 'react';
-import {Redirect} from 'react-router';
-import {Route, Switch, Link} from 'react-router-dom';
+import {renderRoutes} from 'react-router-config';
+import {Link} from 'react-router-dom';
 
-import {Miss} from 'hops-react';
-
-import {Home} from './home';
-import {Counter} from './counter';
+import {routes} from './routes';
 import {LocationInfo} from './locationInfo';
 
 export const App = () => (
@@ -15,11 +12,6 @@ export const App = () => (
       <Link to="/counter">Counter</Link>
     </nav>
     <LocationInfo />
-    <Switch>
-      <Route exact path="/" render={() => <Redirect to="/home" />} />
-      <Route exact path="/home" component={Home} />
-      <Route exact path="/counter" component={Counter} />
-      <Miss />
-    </Switch>
+    {renderRoutes(routes)}
   </div>
 );
