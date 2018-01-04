@@ -1,5 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+
+import {Greeting} from '../greeting';
 import styles from './styles.css';
 
 export default function Home() {
@@ -8,7 +10,7 @@ export default function Home() {
       <Helmet>
         <title>Hops Demo</title>
       </Helmet>
-      <h1 className={styles.headline}>Hello World!</h1>
+      <Greeting className={styles.headline} />
     </div>
   );
 }

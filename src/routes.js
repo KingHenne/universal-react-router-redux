@@ -13,7 +13,7 @@ export const routes = [
     component: () => <Redirect to="/home" />,
   },
   {
-    path: '/home',
+    path: '/home/:visitor?',
     component: Home,
   },
   {
