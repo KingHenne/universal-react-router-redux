@@ -1,9 +1,11 @@
 import React from 'react';
 
-import {render} from 'hops-react';
+import {combineContexts, render} from 'hops-react';
 
 import {App} from './app';
-import {Context} from './context';
+import {ReactContext, ReduxContext} from './context';
 import reducers from './reducers';
 
-export default render(<App />, new Context({reducers}));
+const createContext = combineContexts(ReactContext, ReduxContext);
+
+export default render(<App />, createContext({reducers}));
