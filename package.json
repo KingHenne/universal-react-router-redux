@@ -1,8 +1,8 @@
 {
   "name": "hops-enhance-element",
   "version": "1.0.0",
-  "main": "src/main-node.js",
-  "browser": "src/main-dom.js",
+  "main": "src/mainNode.js",
+  "browser": "src/mainDom.js",
   "license": "MIT",
   "config": {
     "hops": {
