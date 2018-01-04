@@ -1,22 +1,18 @@
 import createBrowserHistory from 'history/createBrowserHistory';
 import React from 'react';
 
-import {
-  ReactContext as HopsReactContext,
-  combineContexts,
-  render,
-} from 'hops-react';
+import {combineContexts, render} from 'hops-react';
 
 import {App} from './app';
-import {Context} from './context';
+import {ReactContext, ReduxContext} from './context';
 import reducers from './reducers';
 
-class DomContext extends Context {
+class DomReduxContext extends ReduxContext {
   createHistory() {
     return createBrowserHistory();
   }
 }
 
-const createContext = combineContexts(HopsReactContext, DomContext);
+const createContext = combineContexts(ReactContext, DomReduxContext);
 
 export default render(<App />, createContext({reducers}));
