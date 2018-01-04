@@ -1,4 +1,4 @@
-import {LOCATION_CHANGE} from 'react-router-redux';
+import {LOCATION_CHANGE} from './actions';
 
 export function routerReducer(state = null, action) {
   if (action.type === LOCATION_CHANGE) {

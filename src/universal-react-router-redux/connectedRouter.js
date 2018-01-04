@@ -1,4 +1,4 @@
-import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Router} from 'react-router';
 import {matchRoutes} from 'react-router-config';
@@ -6,6 +6,13 @@ import {matchRoutes} from 'react-router-config';
 import {locationChange} from './actions';
 
 export class ConnectedRouter extends React.Component {
+  static propTypes = {
+    children: PropTypes.node,
+    history: PropTypes.object.isRequired,
+    routes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    static: PropTypes.bool,
+  };
+
   static contextTypes = {store: PropTypes.object};
 
   constructor(props) {
@@ -16,7 +23,9 @@ export class ConnectedRouter extends React.Component {
   componentWillMount() {
     const {history} = this.props;
     this.handleLocationChange(history.location);
-    this.unsubscribeFromHistory = history.listen(this.handleLocationChange);
+    if (!this.props.static) {
+      this.unsubscribeFromHistory = history.listen(this.handleLocationChange);
+    }
   }
 
   componentWillUnmount() {
@@ -26,8 +35,8 @@ export class ConnectedRouter extends React.Component {
   }
 
   render() {
-    const {routes, ...routerProps} = this.props;
-    return <Router {...routerProps} />;
+    const {children, history} = this.props;
+    return <Router history={history}>{children}</Router>;
   }
 
   handleLocationChange(location) {
