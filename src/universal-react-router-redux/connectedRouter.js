@@ -22,10 +22,10 @@ export class ConnectedRouter extends React.Component {
 
   componentWillMount() {
     const {history} = this.props;
-    this.handleLocationChange(history.location);
     if (!this.props.static) {
       this.unsubscribeFromHistory = history.listen(this.handleLocationChange);
     }
+    this.handleLocationChange(history.location);
   }
 
   componentWillUnmount() {
