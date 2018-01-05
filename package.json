@@ -1,0 +1,9 @@
+{
+  "name": "universal-react-router-redux",
+  "version": "0.0.0",
+  "description": "Keep your state in sync with your router",
+  "main": "dist/index.js",
+  "repository": "https://github.com/KingHenne/universal-react-router-redux.git",
+  "author": "Hendrik Liebau <mail@hendrik-liebau.de>",
+  "license": "MIT"
+}
