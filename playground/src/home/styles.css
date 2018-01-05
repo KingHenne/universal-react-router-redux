@@ -1,0 +1,22 @@
+:root {
+  --font-family-sans: 'Helvetica Neue', Arial, sans;
+  --font-size: 2rem;
+  --primary-color: rebeccapurple;
+}
+
+body {
+  text-align: center;
+  color: var(--primary-color);
+  font-family: var(--font-family-sans);
+}
+
+.headline {
+  margin-top: 2em;
+  display: inline-block;
+
+  font-size: var(--font-size);
+
+  @nest &::after {
+    content: ' 🚀';
+  }
+}
