@@ -1,26 +1,31 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {Router} from 'react-router';
-import {matchRoutes} from 'react-router-config';
+import {History, Location, UnregisterCallback} from 'history';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+import {Router, match as Match} from 'react-router';
+import {RouteConfig, matchRoutes} from 'react-router-config';
+import {Store} from 'redux';
 
 import {locationChange} from './actions';
 
-export class ConnectedRouter extends React.Component {
-  static propTypes = {
-    children: PropTypes.node,
-    history: PropTypes.object.isRequired,
-    routes: PropTypes.arrayOf(PropTypes.object),
-    static: PropTypes.bool,
-  };
+export interface ConnectedRouterProps {
+  children?: React.ReactNode;
+  history: History;
+  routes?: RouteConfig[];
+  static?: boolean;
+}
 
-  static contextTypes = {store: PropTypes.object};
+export class ConnectedRouter extends React.Component<ConnectedRouterProps> {
+  public static contextTypes = {store: PropTypes.object};
+  public context: {store: Store<any>}; // tslint:disable-line no-any
 
-  constructor(props) {
+  private unsubscribeFromHistory: UnregisterCallback;
+
+  public constructor(props: ConnectedRouterProps) {
     super(props);
     this.handleLocationChange = this.handleLocationChange.bind(this);
   }
 
-  componentWillMount() {
+  public componentWillMount(): void {
     const {history} = this.props;
     if (!this.props.static) {
       this.unsubscribeFromHistory = history.listen(this.handleLocationChange);
@@ -28,23 +33,25 @@ export class ConnectedRouter extends React.Component {
     this.handleLocationChange(history.location);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount(): void {
     if (this.unsubscribeFromHistory) {
       this.unsubscribeFromHistory();
     }
   }
 
-  render() {
+  public render(): React.ReactNode {
     const {children, history} = this.props;
+
     return <Router history={history}>{children}</Router>;
   }
 
-  handleLocationChange(location) {
+  private handleLocationChange(location: Location): void {
     const match = this.findMatch(location);
     this.context.store.dispatch(locationChange(location, match));
   }
 
-  findMatch(location) {
+  // tslint:disable-next-line no-any
+  private findMatch(location: Location): Match<any> | undefined {
     if (!this.props.routes) {
       return undefined;
     }

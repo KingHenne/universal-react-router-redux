@@ -1,0 +1,11 @@
+{
+  "extends": "./node_modules/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "dist",
+    "jsx": "react",
+    "noStrictGenericChecks": true,
+    "lib": ["dom", "es2017"],
+    "sourceMap": false
+  }
+}

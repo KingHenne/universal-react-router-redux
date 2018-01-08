@@ -1,26 +1,29 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import {History} from 'history';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+import {RouteConfig} from 'react-router-config';
 
 import {ConnectedRouter} from './connectedRouter';
 
-export class StaticRouter extends React.Component {
-  static propTypes = {
-    context: PropTypes.object.isRequired,
-    children: PropTypes.node,
-    history: PropTypes.object.isRequired,
-    routes: PropTypes.arrayOf(PropTypes.object),
-  };
+export interface StaticRouterProps {
+  children?: React.ReactNode;
+  history: History;
+  context: any; // tslint:disable-line no-any
+  routes?: RouteConfig[];
+}
 
-  static defaultProps = {
-    basename: '',
-    location: '/',
+export interface StaticRouterChildContext {
+  router: {
+    staticContext: any; // tslint:disable-line no-any
   };
+}
 
-  static childContextTypes = {
+export class StaticRouter extends React.Component<StaticRouterProps> {
+  public static childContextTypes = {
     router: PropTypes.object.isRequired,
   };
 
-  getChildContext() {
+  public getChildContext(): StaticRouterChildContext {
     return {
       router: {
         staticContext: this.props.context,
@@ -28,7 +31,7 @@ export class StaticRouter extends React.Component {
     };
   }
 
-  render() {
+  public render(): React.ReactNode {
     const {children, history, routes} = this.props;
 
     return (

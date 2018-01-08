@@ -1,12 +1,26 @@
-import {CALL_HISTORY_METHOD} from './actions';
+import {History} from 'history';
+import {Action, Middleware} from 'redux';
 
-export function routerMiddleware(history) {
-  return () => next => action => {
+import {
+  CALL_HISTORY_METHOD,
+  RouterAction,
+  UpdateLocationMethod,
+} from './actions';
+
+export type HistoryRecord = Record<
+  UpdateLocationMethod,
+  (...args: any[]) => void // tslint:disable-line no-any
+>;
+
+export function routerMiddleware(history: History): Middleware {
+  return () => next => (action: Action | RouterAction) => {
     if (action.type !== CALL_HISTORY_METHOD) {
       return next(action);
     }
 
-    const {method, args} = action.payload;
-    history[method](...args);
+    const {method, args} = (action as RouterAction).payload;
+    (history as HistoryRecord)[method](...args);
+
+    return;
   };
 }

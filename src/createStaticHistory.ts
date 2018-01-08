@@ -1,6 +1,29 @@
-import {createPath, parsePath} from 'history';
+import {
+  Action,
+  History,
+  Location,
+  LocationDescriptor,
+  LocationDescriptorObject,
+  createLocation,
+  createPath,
+  parsePath,
+} from 'history';
 
-function normalizeLocation({pathname = '/', search = '', hash = ''}) {
+export interface StaticHistoryOptions {
+  location: LocationDescriptor;
+  basename?: string;
+  context?: {
+    action?: Action;
+    location?: Location;
+    url?: string;
+  };
+}
+
+function normalizeLocation({
+  pathname = '/',
+  search = '',
+  hash = '',
+}: LocationDescriptorObject): LocationDescriptorObject {
   return {
     pathname,
     search: search === '?' ? '' : search,
@@ -8,11 +31,14 @@ function normalizeLocation({pathname = '/', search = '', hash = ''}) {
   };
 }
 
-function addLeadingSlash(pathname) {
+function addLeadingSlash(pathname: string): string {
   return pathname.charAt(0) === '/' ? pathname : '/' + pathname;
 }
 
-function addBasename(basename, location) {
+function addBasename(
+  basename: string | undefined,
+  location: Location,
+): Location {
   if (!basename) {
     return location;
   }
@@ -23,7 +49,10 @@ function addBasename(basename, location) {
   };
 }
 
-function stripBasename(basename, location) {
+function stripBasename(
+  basename: string | undefined,
+  location: Location,
+): Location {
   if (!basename) {
     return location;
   }
@@ -40,37 +69,53 @@ function stripBasename(basename, location) {
   };
 }
 
-function createLocation(location) {
+function createNormalizedLocation(location: LocationDescriptor): Location {
   return typeof location === 'string'
     ? parsePath(location)
-    : normalizeLocation(location);
+    : createLocation(normalizeLocation(location));
 }
 
-function createURL(location) {
+function createURL(location: LocationDescriptor): string {
   return typeof location === 'string' ? location : createPath(location);
 }
 
-function noop() {}
+function noop(): void {} // tslint:disable-line no-empty
 
-export function createStaticHistory({basename, context = {}, location}) {
-  const createHref = path => addLeadingSlash(basename + createURL(path));
+export function createStaticHistory({
+  location: initialLocation,
+  basename = '',
+  context = {},
+}: StaticHistoryOptions): History {
+  const createHref = (location: LocationDescriptor) =>
+    addLeadingSlash(basename + createURL(location));
 
-  const handlePush = newLocation => {
-    context.action = 'PUSH';
-    context.location = addBasename(basename, createLocation(newLocation));
+  const handleNewLocation = (
+    location: LocationDescriptor,
+    action: 'PUSH' | 'REPLACE',
+  ) => {
+    context.action = action;
+    context.location = addBasename(
+      basename,
+      createNormalizedLocation(location),
+    );
     context.url = createURL(context.location);
   };
 
-  const handleReplace = newLocation => {
-    context.action = 'REPLACE';
-    context.location = addBasename(basename, createLocation(newLocation));
-    context.url = createURL(context.location);
+  const handlePush = (location: LocationDescriptor) => {
+    handleNewLocation(location, 'PUSH');
   };
 
-  const history = {
-    createHref: createHref,
+  const handleReplace = (location: LocationDescriptor) => {
+    handleNewLocation(location, 'REPLACE');
+  };
+
+  return {
+    createHref,
     action: 'POP',
-    location: stripBasename(basename, createLocation(location)),
+    location: stripBasename(
+      basename,
+      createNormalizedLocation(initialLocation),
+    ),
     push: handlePush,
     replace: handleReplace,
     go: noop,
@@ -78,7 +123,6 @@ export function createStaticHistory({basename, context = {}, location}) {
     goForward: noop,
     listen: () => noop,
     block: () => noop,
+    length: 1,
   };
-
-  return history;
 }
