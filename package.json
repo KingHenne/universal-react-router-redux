@@ -16,7 +16,7 @@
     "format": "prettier --write 'src/**/*.js'",
     "prerelease": "git checkout master && git pull --ff-only origin master",
     "release": "standard-version",
-    "prepublish": "yarn build"
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "history": "^4.7.2",
