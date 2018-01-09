@@ -4,9 +4,9 @@ import {Action} from 'redux';
 
 import {LOCATION_CHANGE, LocationChangeAction} from './actions';
 
-export interface RouterState {
+export interface RouterState<Params = Record<string, string>> {
   location: Location;
-  match?: Match<any>; // tslint:disable-line no-any
+  match?: Match<Params>;
 }
 
 export function routerReducer(
